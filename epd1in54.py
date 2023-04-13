@@ -89,29 +89,29 @@ class EPD:
         
     # Hardware reset
     def reset(self):
-        epdconfig.digital_write(self.reset_pin, 1)
-        epdconfig.delay_ms(200) 
-        epdconfig.digital_write(self.reset_pin, 0)         # module reset
-        epdconfig.delay_ms(5)
-        epdconfig.digital_write(self.reset_pin, 1)
-        epdconfig.delay_ms(200)   
+        device.digital_write(self.reset_pin, 1)
+        device.delay_ms(200) 
+        device.digital_write(self.reset_pin, 0)         # module reset
+        device.delay_ms(5)
+        device.digital_write(self.reset_pin, 1)
+        device.delay_ms(200)   
 
     def send_command(self, command):
-        epdconfig.digital_write(self.dc_pin, 0)
-        epdconfig.digital_write(self.cs_pin, 0)
-        epdconfig.spi_writebyte([command])
-        epdconfig.digital_write(self.cs_pin, 1)
+        device.digital_write(self.dc_pin, 0)
+        device.digital_write(self.cs_pin, 0)
+        device.spi_writebyte([command])
+        device.digital_write(self.cs_pin, 1)
 
     def send_data(self, data):
-        epdconfig.digital_write(self.dc_pin, 1)
-        epdconfig.digital_write(self.cs_pin, 0)
-        epdconfig.spi_writebyte([data])
-        epdconfig.digital_write(self.cs_pin, 1)
+        device.digital_write(self.dc_pin, 1)
+        device.digital_write(self.cs_pin, 0)
+        device.spi_writebyte([data])
+        device.digital_write(self.cs_pin, 1)
         
     def ReadBusy(self):
 #        logger.debug("e-Paper busy")
-        while(epdconfig.digital_read(self.busy_pin) == 1):      # 0: idle, 1: busy
-            epdconfig.delay_ms(100)
+        while(device.digital_read(self.busy_pin) == 1):      # 0: idle, 1: busy
+            device.delay_ms(100)
 #        logger.debug("e-Paper busy release")
 
     def TurnOnDisplay(self):
@@ -144,7 +144,7 @@ class EPD:
         # self.ReadBusy()
         
     def init(self, lut):
-        if (epdconfig.module_init() != 0):
+        if (device.module_init() != 0):
             return -1
         # EPD hardware init start
         self.reset()
@@ -230,6 +230,6 @@ class EPD:
         self.send_command(0x10) # DEEP_SLEEP_MODE
         self.send_data(0x01)
         
-        epdconfig.delay_ms(2000)
-        epdconfig.module_exit()
+        device.delay_ms(2000)
+        device.module_exit()
 ### END OF FILE ###
