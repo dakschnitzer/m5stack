@@ -1,15 +1,10 @@
 import epd1in54
-from machine import SPI, Pin
 
-# Initialize the SPI bus and the pins used by the display
-spi = SPI(1)
-cs = Pin(9)
-dc = Pin(15)
-rst = Pin(0)
-busy = Pin(4)
+
+
 
 # Create an instance of the epd1in54 class
-epd = epd1in54.EPD(spi, cs, dc, rst, busy)
+epd = epd1in54.EPD()
 
 # Initialize the display
 epd.init()
